@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+    clash:
+        image: dreamacro/clash:latest
+        container_name: clash
+        volumes:
+          #- /home/lilin/.config/clash/config.yaml:/config.yaml
+          - /home/lilin/.config/clash/config.yaml:/root/.config/clash/config.yaml
+        ports:
+          - "7892:7892"
+          - "7893:7893"
+          - "7890:7890"
+          - "7891:7891"
+          - "9090:9090"
+        restart: always
+    clash-dashboard:
+        image: ghcr.io/haishanh/yacd:master
+        container_name: clash-dashboard
+        ports:
+          - "880:80"
+        restart: always

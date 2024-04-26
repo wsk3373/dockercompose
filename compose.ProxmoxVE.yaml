@@ -1,0 +1,16 @@
+# version:3.7
+ services:
+   pve:
+    image: spiritlhl/pve:7_x86_64
+    privileged: true
+    environment:
+      - PUID=0
+      - PGID=0
+    volumes:
+      - /mnt/myvg-mylv:/var/lib/vz
+    restart: unless-stopped
+    network_mode: host
+    extra_hosts:
+      - "pve:192.168.88.10"
+#      - "anotherhost:172.16.0.1"
+    hostname: pve
