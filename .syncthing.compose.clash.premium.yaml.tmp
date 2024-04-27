@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+    clash:
+        container_name: clash
+        image: dreamacro/clash-premium
+        restart: always
+        privileged: true
+        devices:
+          - /dev/net/tun
+        volumes:
+          - /home/lilin/.config/clash/config.yaml:/root/.config/clash/config.yaml
+          #- /home/lilin/.config/clash/ui:/root/ui
+        network_mode: host
+        # networks:
+        #   macnet:
+        #       ipv4_address: 192.168.88.20
+
+    yacd:
+        container_name: yacd
+        image: ghcr.io/haishanh/yacd:master
+        restart: always
+        ports:
+          - "880:80"
+        # command: ["-p", "801"]
+        depends_on:
+          - clash
+
+# networks:
+#   macnet:
+#     external: true

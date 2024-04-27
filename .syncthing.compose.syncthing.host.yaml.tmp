@@ -9,6 +9,6 @@ services:
       - PUID=0
       - PGID=0
     volumes:
-      - /lvm2-th/syncthing/:/var/syncthing/
+      - /lvm2-th/syncthing:/var/syncthing
     network_mode: host
     restart: unless-stopped
