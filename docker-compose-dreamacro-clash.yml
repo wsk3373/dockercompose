@@ -1,0 +1,21 @@
+version: '3'
+services:
+clash:
+    image: dreamacro/clash
+    container_name: clash
+    # When your system is Linux, you can use `network_mode: "host"` directly.
+    network_mode: "host"
+    restart: always
+    volumes:
+    - ./config.yaml:/root/.config/clash/config.yaml
+    ports:
+    - "7890:7890"
+    - "7891:7891"
+    - "7892:7892"
+    - "9090:9090"
+    - "5353:5353/udp"
+    - "5353:5353/tcp"
+
+
+
+

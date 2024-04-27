@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  openwrt:
+    # image: sulinggg/openwrt
+    # image: kiddin9/openwrt-nginx 
+    # image: piaoyizy/openwrt-x86 
+    # image: crazygit/lean-openwrt-x86-64 #原版
+    # image: imageNamepiaoyizy/openwrt-x86
+    image: registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64 #测试可用
+   
+    # volumes:
+    #   - /root/docker.config/openwrt:/etc/config
+    command: sbin/init
+    privileged: true
+    restart: always
+    networks:
+      macnet:
+        ipv4_address: 192.168.88.3
+
+networks:
+  macnet:
+    external: true  # 下级
