@@ -1,0 +1,25 @@
+
+Get-ExecutionPolicy -List 
+Get-ExecutionPolicy                          # 这会显示当前的执行策略
+Set-ExecutionPolicy Restricted           #不允许执行任何脚本。
+Set-ExecutionPolicy AllSigned            #只允许执行签名的脚本。
+Set-ExecutionPolicy RemoteSigned    #本地脚本无要求，远程脚本需要签名。
+Set-ExecutionPolicy Unrestricted        #允许所有脚本执行。
+Set-ExecutionPolicy Bypass                #没有任何限制，允许所有脚本执行。
+Set-ExecutionPolicy Undefined          #未设置策略，默认策略。
+
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+Set-ExecutionPolicy Undefined CurrentUser
+作用范围有：
+Process：只对当前 PowerShell 会话有效，关闭会话后设置失效。
+CurrentUser：只对当前用户的 PowerShell 会话有效。
+LocalMachine：对所有用户的 PowerShell 会话有效（管理员权限）。
+UserPolicy：由组策略定义的执行策略（适用于 Windows 服务器等环境）。
+MachinePolicy：由组策略定义的执行策略（适用于组织的 IT 部门设置的策略）。
+你可以使用 -Scope 参数来设置作用范围。例如，设置当前用户的执行策略：
+
+
+https://massgrave.dev/
+
+
+Remove-Item -Path .\nssm\ -Recurse -Force     强删除文件

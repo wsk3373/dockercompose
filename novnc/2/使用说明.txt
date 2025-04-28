@@ -1,0 +1,17 @@
+config.bat（启动入口）
+bat
+复制
+编辑
+@echo off
+powershell -ExecutionPolicy Bypass -File "%~dp0install.ps1"
+pause
+✅ 打包方式建议
+你可以把这个项目结构组织为：
+
+arduino
+复制
+编辑
+vnc-novnc-deployer\
+├─ install.ps1
+├─ config.bat
+然后用户只需双击 config.bat，就会自动下载所有东西并部署成功。
