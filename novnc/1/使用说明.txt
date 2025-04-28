@@ -7,4 +7,4 @@ powershell
 复制
 编辑
 Set-ExecutionPolicy Bypass -Scope Process -Force
-iwr -useb http://192.168.0.212:800/novnc/1/install-vnc-novnc.ps1 | iex
+iwr -useb https://raw.githubusercontent.com/wsk3373/dockercompose/refs/heads/main/novnc/1/install-vnc-novnc.ps1 | iex
