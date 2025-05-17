@@ -1,0 +1,36 @@
+x-extra-hosts: &extra_hosts
+  - ${EXTRA_HOSTS}
+
+x-common-proxy: &common-proxy
+  HTTP_PROXY: "${HTTP_PROXY}"
+  HTTPS_PROXY: "${HTTPS_PROXY}"
+  NO_PROXY: "${NO_PROXY}"
+
+x-common-volumes: &common-volumes
+  - ./:/MoneyPrinterTurbo
+
+services:
+  webui:
+    build:
+      context: .
+      args:
+       <<: *common-proxy
+      dockerfile: Dockerfile
+    container_name: "moneyprinterturbo-webui"
+    ports:
+      - "8501:8501"
+    command: [ "streamlit", "run", "./webui/Main.py","--browser.serverAddress=127.0.0.1","--server.enableCORS=True","--browser.gatherUsageStats=False" ]
+    volumes: *common-volumes
+    restart: always
+  api:
+    build:
+      context: .
+      args:
+       <<: *common-proxy
+      dockerfile: Dockerfile
+    container_name: "moneyprinterturbo-api"
+    ports:
+      - "8080:8080"
+    command: [ "python3", "main.py" ]
+    volumes: *common-volumes
+    restart: always
