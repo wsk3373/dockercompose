@@ -1,7 +1,7 @@
 #version: '3.8'
 x-extra-hosts: &extra_hosts
   extra_hosts:
-    - "proxy.grep2000.com:10.8.0.15""
+    - "proxy.grep2000.com:10.8.0.15"
 
 x-common-volumes: &common-volumes
   - ${MPT_DIR}.MoneyPrinterTurbo:/MoneyPrinterTurbo
