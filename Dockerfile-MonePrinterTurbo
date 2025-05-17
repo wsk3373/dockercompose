@@ -1,14 +1,13 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim-bullseye
+#Dockerfile 使用
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ARG NO_PROXY
 # 设置标准代理环境变量
-ENV HTTP_PROXY=http://proxy.grep2000.com:710
-ENV HTTPS_PROXY=http://proxy.grep2000.com:710
-ENV http_proxy=http://proxy.grep2000.com:710
-ENV https_proxy=http://proxy.grep2000.com:710
-ENV NO_PROXY=localhost,127.0.0.1
-ENV no_proxy=localhost,127.0.0.1
-
-
+ENV http_proxy=${HTTP_PROXY}
+ENV https_proxy=${HTTPS_PROXY}
+ENV no_proxy=${NO_PROXY}
 # Set the working directory in the container
 WORKDIR /MoneyPrinterTurbo
 
@@ -38,7 +37,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8501
 
 # Command to run the application
-CMD ["streamlit", "run", "./webui/Main.py","--browser.serverAddress=127.0.0.1","--server.enableCORS=True","--browser.gatherUsageStats=False"]
+CMD ["streamlit", "run", "./webui/Main.py","--browser.serverAddress=0.0.0.0","--server.enableCORS=True","--browser.gatherUsageStats=False"]
 
 # 1. Build the Docker image using the following command
 # docker build -t moneyprinterturbo .

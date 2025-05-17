@@ -13,20 +13,16 @@ x-common-proxy: &common-proxy
 
 services:
   webui:
-    build:
-      context: .
-      dockerfile: Dockerfile-MonePrinterTurbo
-      args:
-        <<: *common-proxy
+    image: moneyprinterturbo
     environment:
       <<: *common-proxy
-    container_name: "moneyprinterturbo-webui"
+    container_name: "moneyprinterturbo"
     ports:
       - "8501:8501"
     <<: *extra_hosts
     command: [
       "streamlit", "run", "./webui/Main.py",
-      "--browser.serverAddress=127.0.0.1",
+      "--browser.serverAddress=0.0.0.0",
       "--server.enableCORS=True",
       "--browser.gatherUsageStats=False"
     ]
@@ -34,14 +30,10 @@ services:
     restart: always
 
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile-MonePrinterTurbo
-      args:
-        <<: *common-proxy
+    image: moneyprinterturbo
     environment:
       <<: *common-proxy
-    container_name: "moneyprinterturbo-api"
+    container_name: "moneyprinterturbo"
     ports:
       - "8080:8080"
     <<: *extra_hosts
