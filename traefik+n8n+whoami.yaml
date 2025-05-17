@@ -1,0 +1,53 @@
+#version: "3.7"
+
+services:
+  traefik:
+    image: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - web
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    volumes:
+      - ~/.n8n/n8n-data:/home/node/.n8n
+    user: "1000:1000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.n8n.rule=PathPrefix(`/n8n`)"
+      - "traefik.http.routers.n8n.entrypoints=web"
+      - "traefik.http.routers.n8n.middlewares=n8n-strip"
+      - "traefik.http.middlewares.n8n-strip.stripprefix.prefixes=/n8n"
+      - "traefik.http.services.n8n.loadbalancer.server.port=5678"
+
+    environment:
+      - N8N_SECURE_COOKIE=false
+      - N8N_LOG_LEVEL=debug
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://192.168.0.12/n8n/
+    networks:
+      - web
+
+  whoami:
+    image: traefik/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=PathPrefix(`/whoami`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+    networks:
+      - web
+
+networks:
+  web:
+    external: false

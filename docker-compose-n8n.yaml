@@ -1,0 +1,17 @@
+name: n8n
+services:
+    n8n:
+        volumes:
+            - ~.docker/n8n/pki:/opt/custom-certificates
+        container_name: n8n
+        ports:
+            - 5678:5678
+        image: docker.n8n.io/n8nio/n8n
+        environment:
+            - N8N_SECURE_COOKIE=false
+            - N8N_BASIC_AUTH_ACTIVE=true
+            - N8N_BASIC_AUTH_USER=admin
+            - N8N_BASIC_AUTH_PASSWORD=123456
+
+        restart: unless-stopped
+
