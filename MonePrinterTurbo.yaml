@@ -1,18 +1,21 @@
 #version: '3.8'
+x-extra-hosts: &extra_hosts
+  extra_hosts:
+    - "proxy.grep2000.com:10.8.0.15""
 
 x-common-volumes: &common-volumes
-  - ~/.MoneyPrinterTurbo:/MoneyPrinterTurbo
+  - ${MPT_DIR}.MoneyPrinterTurbo:/MoneyPrinterTurbo
 
 x-common-proxy: &common-proxy
-  HTTP_PROXY: http://192.168.0.12:710
-  HTTPS_PROXY: http://192.168.0.12:710
+  HTTP_PROXY: http://proxy.grep2000.com:710
+  HTTPS_PROXY: http://proxy.grep2000.com:710
   NO_PROXY: localhost,127.0.0.1
 
 services:
   webui:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-MonePrinterTurbo
       args:
         <<: *common-proxy
     environment:
@@ -20,6 +23,7 @@ services:
     container_name: "moneyprinterturbo-webui"
     ports:
       - "8501:8501"
+    <<: *extra_hosts
     command: [
       "streamlit", "run", "./webui/Main.py",
       "--browser.serverAddress=127.0.0.1",
@@ -32,7 +36,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-MonePrinterTurbo
       args:
         <<: *common-proxy
     environment:
@@ -40,6 +44,7 @@ services:
     container_name: "moneyprinterturbo-api"
     ports:
       - "8080:8080"
+    <<: *extra_hosts
     command: [ "python3", "main.py" ]
     volumes: *common-volumes
     restart: always
