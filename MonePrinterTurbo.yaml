@@ -1,14 +1,14 @@
 #version: '3.8'
 x-extra-hosts: &extra_hosts
   extra_hosts:
-    - "proxy.grep2000.com:10.8.0.15"
+    - ${EXTRA_HOSTS}
 
 x-common-volumes: &common-volumes
   - ${MPT_DIR}.MoneyPrinterTurbo:/MoneyPrinterTurbo
 
 x-common-proxy: &common-proxy
-  HTTP_PROXY: http://proxy.grep2000.com:710
-  HTTPS_PROXY: http://proxy.grep2000.com:710
+  HTTP_PROXY: "http://${PORXY_HOST}:${PROXY_PORT}"
+  HTTPS_PROXY: "http://${PORXY_HOST}:${PROXY_PORT}"
   NO_PROXY: localhost,127.0.0.1
 
 services:
