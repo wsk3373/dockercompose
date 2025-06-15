@@ -1,3 +1,6 @@
 [submodule "MonePrinterTurbo/external/MonePrinterTurbo"]
 	path = MonePrinterTurbo/external/MonePrinterTurbo
 	url = https://github.com/harry0703/MoneyPrinterTurbo.git
+[submodule "Duix.Heygem"]
+	path = Duix.Heygem
+	url = https://github.com/duixcom/Duix.Heygem.git
